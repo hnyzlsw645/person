@@ -1,0 +1,80 @@
+server:
+  port: 9090
+  tomcat:
+    uri-encoding: UTF-8
+
+spring:
+  mvc:
+    view:
+      prefix: iot-mqtt
+
+  datasource:
+#    url: jdbc:mysql://60.210.100.74:3306/agr_basic_u2?allowMultiQueries=true&useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull&autoReconnect=true
+    druid:
+      url: jdbc:mysql://47.93.255.204:3306/remote_file_manage?allowMultiQueries=true&useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull&autoReconnect=true
+      username: root
+      password: liu123654
+      initial-size: 5
+      max-active: 50
+      min-idle: 5
+      max-wait: 60000
+      pool-prepared-statements: true
+      max-pool-prepared-statement-per-connection-size: 20
+      time-between-eviction-runs-millis: 60000
+      min-evictable-idle-time-millis: 300000
+      validation-query: SELECT 1
+      test-while-idle: true
+      test-on-borrow: false
+      test-on-return: false
+      stat-view-servlet:
+        reset-enable: false
+      filter:
+        wall:
+          enabled: true
+          encoding:
+            enabled: true
+          stat:
+            log-slow-sql: true
+            slow-sql-millis: 1000
+            merge-sql: false
+    driver-class-name: com.mysql.jdbc.Driver
+    username: root
+    password: yyAgr!!#%1
+
+mybatis-plus:
+  type-aliases-package: com.example.iotmqtt.entity
+  mapper-locations: classpath:mappers/**.xml
+  configuration:
+    map-underscore-to-camel-case: true
+  global-config:
+    banner: false
+    db-config:
+      id-type: UUID
+      insert_strategy: NOT_NULL
+      table-underline: true
+      logic-delete-value: 1
+      logic-not-delete-value: 0
+
+#============================================================================
+# netty socket io setting
+#============================================================================
+# host在本地测试可以设置为localhost或者本机IP，在Linux服务器跑可换成服务器IP
+
+#socketio:
+#  host: localhost
+#  port: 9099
+  # 设置最大每帧处理数据的长度，防止他人利用大数据来攻击服务器
+#  maxFramePayloadLength: 1048576
+  # 设置http交互最大内容长度
+#  maxHttpContentLength: 1048576
+  # socket连接数大小（如只监听一个端口boss线程组为1即可）
+#  bossCount: 1
+#  workCount: 100
+#  allowCustomRequests: true
+  # 协议升级超时时间（毫秒），默认10秒。HTTP握手升级为ws协议超时时间
+#  upgradeTimeout: 1000000
+  # Ping消息超时时间（毫秒），默认60秒，这个时间间隔内没有接收到心跳消息就会发送超时事件
+#  pingTimeout: 6000000
+  # Ping消息间隔（毫秒），默认25秒。客户端向服务器发送一条心跳消息间隔
+#  pingInterval: 25000
+

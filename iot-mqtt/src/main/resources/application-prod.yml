@@ -1,0 +1,53 @@
+server:
+  port: 9090
+  tomcat:
+    uri-encoding: UTF-8
+
+spring:
+  mvc:
+    view:
+      prefix: iot-mqtt
+
+  datasource:
+    druid:
+      url: jdbc:mysql://172.17.173.113:3306/agr_basic_u2?allowMultiQueries=true&useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull&autoReconnect=true
+      username: root
+      password: yyAgr!!#%1
+      initial-size: 5
+      max-active: 50
+      min-idle: 5
+      max-wait: 60000
+      pool-prepared-statements: true
+      max-pool-prepared-statement-per-connection-size: 20
+      time-between-eviction-runs-millis: 60000
+      min-evictable-idle-time-millis: 300000
+      validation-query: SELECT 1
+      test-while-idle: true
+      test-on-borrow: false
+      test-on-return: false
+      stat-view-servlet:
+        reset-enable: false
+      filter:
+        wall:
+          enabled: true
+          encoding:
+            enabled: true
+          stat:
+            log-slow-sql: true
+            slow-sql-millis: 1000
+            merge-sql: false
+    driver-class-name: com.mysql.jdbc.Driver
+
+mybatis-plus:
+  type-aliases-package: com.example.iotmqtt.entity
+  mapper-locations: classpath:mappers/**.xml
+  configuration:
+    map-underscore-to-camel-case: true
+  global-config:
+    banner: false
+    db-config:
+      id-type: UUID
+      insert_strategy: NOT_NULL
+      table-underline: true
+      logic-delete-value: 1
+      logic-not-delete-value: 0
